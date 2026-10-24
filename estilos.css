@@ -176,9 +176,3 @@ td {
     color: var(--text-main);
 }
 
-tr:hover td {
-    background-color: rgba(56, 189, 248, 0.05);
-    color: var(--accent);
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
