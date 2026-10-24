@@ -96,7 +96,7 @@ let contenido = '';
 function mostrarTorneos() {
     // 25. Crear una variable vacía para concatenar el HTML
     const cuerpo = document.getElementById("cuerpoTabla")
-    
+    let contenido = '';
 
 
     // 26. Recorrer el arreglo torneos utilizando obligatoriamente un ciclo for
@@ -191,6 +191,7 @@ function eliminarTorneo(indice) {
         generarTarjetas();
         actualizarEstadisticas();
         document.getElementById("mensajeExito").textContent = "Torneo eliminado exitosamente.";
+        
     }
 }
 //ya
