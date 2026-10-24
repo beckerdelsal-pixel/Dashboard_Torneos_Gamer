@@ -11,6 +11,10 @@
 </head>
 
 <body>
+    <div style="margin-bottom: 1rem;">
+    <label for="txtBuscar">Buscar Torneo:</label>
+    <input type="text" id="txtBuscar" onkeyup="buscarTorneos();" placeholder="Escribe Nombre/Categoría para buscar..." />
+</div>
 
     <h1>Dashboard Torneos Gamer</h1>
     <form id="formularioTorneos">
@@ -46,7 +50,7 @@
 
         </div>
 
-        <input type="button" value="REGISTRAR TORNEO" onclick="registrarTorneo();" />
+        <input type="button" value="REGISTRAR TORNEO" onclick="registrarTorneo();" id="btnRegistrar"/>
     </form>
     <p id="mensajeError"></p>
     <p id="mensajeExito"></p>

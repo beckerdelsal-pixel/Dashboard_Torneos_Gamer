@@ -8,6 +8,7 @@
 // Cada elemento deberá ser un objeto con las propiedades:
 // nombre, categoria, participantes, valorInscripcion, email y recaudacion.
 let torneos = [];
+let indiceEdicion=-1;
 
 /**
  * Actividad 4. Registrar y validar un torneo (30 puntos)
@@ -104,8 +105,8 @@ function mostrarTorneos() {
             <td>${torneoActual.valorInscripcion.toFixed(2)}</td>
             <td>${torneoActual.email}</td>
             <td>${torneoActual.recaudacion.toFixed(2)}</td>
-            <td><input type="button" value="ELIMINAR" onclick="eliminarTorneo();" /><br>
-            <input type="button" value="EDITAR" onclick="editarTorneo();" />
+            <td><input type='button' value='ELIMINAR' onclick='eliminarTorneo(${i});' /><br>
+            <input type='button' value='EDITAR' onclick='editarTorneo(${i});' />
             </td>
         </tr>
         `;
@@ -127,3 +128,63 @@ function limpiarFormulario() {
     // 31. Vaciar los campos del formulario, restablecer la categoría y limpiar los mensajes de error
     document.getElementById("formularioTorneos").reset();
 }
+
+
+
+function editarTorneo(indice) {
+    if (indice >= 0 && indice < torneos.length) {
+        let torneo = torneos[indice];
+        document.getElementById("txtNombre").value = torneo.nombre;
+        document.getElementById("categoria").value = torneo.categoria;
+        document.getElementById("numParticipantes").value = torneo.participantes;
+        document.getElementById("numValor").value = torneo.valorInscripcion;
+        document.getElementById("txtEmail").value = torneo.email;
+        
+        indiceEdicion = indice;
+        document.getElementById("btnRegistrar").value = "ACTUALIZAR TORNEO";
+        document.getElementById("btnRegistrar").onclick = function() {
+            editarTorneo(indiceEdicion);
+        };
+        
+        document.getElementById("mensajeError").textContent = '';
+        document.getElementById("mensajeExito").textContent = '';
+        
+        torneos[indiceEdicion].nombre = document.getElementById("txtNombre").value;
+        torneos[indiceEdicion].categoria = document.getElementById("categoria").value;
+        torneos[indiceEdicion].participantes = parseInt(document.getElementById("numParticipantes").value);
+        torneos[indiceEdicion].valorInscripcion = parseFloat(document.getElementById("numValor").value);
+        torneos[indiceEdicion].email = document.getElementById("txtEmail").value;
+        torneos[indiceEdicion].recaudacion = torneos[indiceEdicion].participantes * torneos[indiceEdicion].valorInscripcion;
+        mostrarTorneos();
+        limpiarFormulario();
+
+        document.getElementById("mensajeExito").textContent = "Actualizacion de torneo EXITOSO!!!";
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function eliminarTorneo(indice) {
+    if (confirm("¿Está seguro de que desea eliminar este torneo?")) {
+        torneos.splice(indice, 1);
+        mostrarTorneos();
+        generarTarjetas();
+        actualizarEstadisticas();
+        document.getElementById("mensajeExito").textContent = "Torneo eliminado exitosamente.";
+    }
+}
+
+
+
+
+
