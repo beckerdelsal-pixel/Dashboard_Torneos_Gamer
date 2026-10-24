@@ -104,6 +104,9 @@ function mostrarTorneos() {
             <td>${torneoActual.valorInscripcion.toFixed(2)}</td>
             <td>${torneoActual.email}</td>
             <td>${torneoActual.recaudacion.toFixed(2)}</td>
+            <td><input type="button" value="ELIMINAR" onclick="eliminarTorneo();" /><br>
+            <input type="button" value="EDITAR" onclick="editarTorneo();" />
+            </td>
         </tr>
         `;
     }
