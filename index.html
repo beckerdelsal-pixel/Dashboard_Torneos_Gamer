@@ -16,37 +16,39 @@
         <div>
             <label for="nombre">Nombre del Torneo: </label>
             <input type="text" id="txtNombre" />
-            <label id="lblError1"></label>
+            
         </div>
         <div>
             <label for="categoria">Categoria del Torneo: </label>
-            <select>
+            <select id="categoria">
                 <option value="Lucha">Lucha</option>
                 <option value="Estrategia">Estrategia</option>
                 <option value="Arcade">Arcade</option>
                 <option value="Deportes">Deportes</option>
                 <option value="Aventuras">Aventuras</option>
             </select>
-            <label id="lblError2"></label>
+            
         </div>
         <div>
             <label for="participantes">Participantes del Torneo: </label>
-            <input type="number" id="numParticipantes" min="1" max="50" />
-            <label id="lblError3"></label>
+            <input type="number" id="numParticipantes" min="1" max="100" />
+            
         </div>
         <div>
             <label for="valor">Valor de Inscripcion: </label>
             <input type="number" id="numValor" />
-            <label id="lblError4"></label>
+            
         </div>
         <div>
             <label for="email">Email del Organizador: </label>
             <input type="email" id="txtEmail" />
-            <label id="lblError5"></label>
+            
         </div>
 
         <input type="button" value="REGISTRAR TORNEO" />
     </form>
+    <p id="mensajeError"></p>
+    <p id="mensajeExito"></p>
     <div>
         <h3>Torneos Registrados</h3>
         <table>

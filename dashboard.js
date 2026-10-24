@@ -15,22 +15,66 @@ let torneos = [];
  */
 function registrarTorneo() {
     // 13. Obtener los valores de todos los campos con document.getElementById()
+    let nombre = document.getElementById("txtNombre").value;
+    let categoria= document.getElementById("categoria").value;
+    let participantes = parseInt(document.getElementById("numParticipantes").value);
+    let valorInscripcion = parseFloat(document.getElementById("numValor").value);
+    let emailOrganizador = document.getElementById("txtEmail")
 
+    const lblError = document.getElementById("mensajeError");
+    const lblExito = document.getElementById("mensajeExito");
+
+    lblError.textContent ='';
+    lblExito.textContent ='';
     // 14. Validar que el nombre tenga al menos 4 caracteres
+    if(nombre.length <= 4){
+        lblError.textContent = 'Error, el nombre debe tener al menos 4 caracteres';
+        return;
+    }
 
     // 15. Validar que se haya seleccionado una categoría
+    if(categoria == ''){
+        lblError.textContent= "Error, debe seleccionar una categoria para continuar";
+        return;
+    }
 
     // 16. Validar que los participantes sean un entero entre 1 y 100
+    if(participantes <1 || participantes >100 || isNaN(participantes)){
+        lblError.textContent = "Error, numero de participantes debe ser entero de entre 1 y 100";
+        return;
+    }
 
     // 17. Validar que el valor de inscripción sea mayor que 0
+    if(valorInscripcion <= 0 || isNaN(valorInscripcion)){
+        lblError.textContent = "Error, la inscripcion debe tener un valor mayor a 0";
+        return;
+    }
 
     // 18. Validar que el email no esté vacío. No se requiere validación avanzada de formato.
+    if(email == ''){
+        lblError.textContent = "Error, debe ingresar un correo obligatorio"
+        return;
+    }
 
     // Si alguna validación falla, mostrar mensajes de error y detener la ejecución
 
     // 19. Calcular la recaudación estimada con: participantes × valor de inscripción
+    let recaudacion = participantes * valorInscripcion;
 
     // 20. Crear el objeto nuevoTorneo con los datos obtenidos
+    const nuevoTorneo = {
+        nombre: nombre,
+        categoria: categoria,
+        participantes: participantes,
+        valorInscripcion: valorInscripcion,
+        email: email,
+        recaudacionEstimada: recaudacion;
+    };
+
+    torneos.push(nuevoTorneo);
+    mostrarTorneos();
+    limpiarFormulario();
+    lblExito.textContent = "Registro de torneo EXITOSO!!!";
 
     // 21. Agregar el objeto al arreglo con push()
 
