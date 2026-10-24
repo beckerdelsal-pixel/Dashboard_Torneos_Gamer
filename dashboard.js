@@ -8,7 +8,7 @@
 // Cada elemento deberá ser un objeto con las propiedades:
 // nombre, categoria, participantes, valorInscripcion, email y recaudacion.
 let torneos = [];
-let indiceEdicion=-1;
+let indiceEdicion = -1;
 
 /**
  * Actividad 4. Registrar y validar un torneo (30 puntos)
@@ -17,7 +17,7 @@ let indiceEdicion=-1;
 function registrarTorneo() {
     // 13. Obtener los valores de todos los campos con document.getElementById()
     let nombre = document.getElementById("txtNombre").value;
-    let categoria= document.getElementById("categoria").value;
+    let categoria = document.getElementById("categoria").value;
     let participantes = parseInt(document.getElementById("numParticipantes").value);
     let valorInscripcion = parseFloat(document.getElementById("numValor").value);
     let email = document.getElementById("txtEmail").value;
@@ -25,34 +25,34 @@ function registrarTorneo() {
     const lblError = document.getElementById("mensajeError");
     const lblExito = document.getElementById("mensajeExito");
 
-    lblError.textContent ='';
-    lblExito.textContent ='';
+    lblError.textContent = '';
+    lblExito.textContent = '';
     // 14. Validar que el nombre tenga al menos 4 caracteres
-    if(nombre.length <= 4){
+    if (nombre.length <= 4) {
         lblError.textContent = 'Error, el nombre debe tener al menos 4 caracteres';
         return;
     }
 
     // 15. Validar que se haya seleccionado una categoría
-    if(categoria == ''){
-        lblError.textContent= "Error, debe seleccionar una categoria para continuar";
+    if (categoria == '') {
+        lblError.textContent = "Error, debe seleccionar una categoria para continuar";
         return;
     }
 
     // 16. Validar que los participantes sean un entero entre 1 y 100
-    if(participantes <1 || participantes >100 || isNaN(participantes)){
+    if (participantes < 1 || participantes > 100 || isNaN(participantes)) {
         lblError.textContent = "Error, numero de participantes debe ser entero de entre 1 y 100";
         return;
     }
 
     // 17. Validar que el valor de inscripción sea mayor que 0
-    if(valorInscripcion <= 0 || isNaN(valorInscripcion)){
+    if (valorInscripcion <= 0 || isNaN(valorInscripcion)) {
         lblError.textContent = "Error, la inscripcion debe tener un valor mayor a 0";
         return;
     }
 
     // 18. Validar que el email no esté vacío. No se requiere validación avanzada de formato.
-    if(email === ''){
+    if (email === '') {
         lblError.textContent = "Error, debe ingresar un correo obligatorio";
         return;
     }
@@ -76,6 +76,7 @@ function registrarTorneo() {
     mostrarTorneos();
     limpiarFormulario();
     lblExito.textContent = "Registro de torneo EXITOSO!!!";
+    generarTarjetas();
 
     // 21. Agregar el objeto al arreglo con push()
 
@@ -92,10 +93,10 @@ function mostrarTorneos() {
     // 25. Crear una variable vacía para concatenar el HTML
     const cuerpo = document.getElementById("cuerpoTabla")
     let contenido = '';
-    
+
 
     // 26. Recorrer el arreglo torneos utilizando obligatoriamente un ciclo for
-    for(let i = 0; i < torneos.length; i++){
+    for (let i = 0; i < torneos.length; i++) {
         let torneoActual = torneos[i];
         contenido += `
         <tr>
@@ -130,7 +131,7 @@ function limpiarFormulario() {
 }
 
 
-
+//revisar
 function editarTorneo(indice) {
     if (indice >= 0 && indice < torneos.length) {
         let torneo = torneos[indice];
@@ -139,41 +140,60 @@ function editarTorneo(indice) {
         document.getElementById("numParticipantes").value = torneo.participantes;
         document.getElementById("numValor").value = torneo.valorInscripcion;
         document.getElementById("txtEmail").value = torneo.email;
-        
+
         indiceEdicion = indice;
         document.getElementById("btnRegistrar").value = "ACTUALIZAR TORNEO";
-        document.getElementById("btnRegistrar").onclick = function() {
+        document.getElementById("btnRegistrar").onclick = function () {
             editarTorneo(indiceEdicion);
         };
-        
+
         document.getElementById("mensajeError").textContent = '';
         document.getElementById("mensajeExito").textContent = '';
-        
-        torneos[indiceEdicion].nombre = document.getElementById("txtNombre").value;
-        torneos[indiceEdicion].categoria = document.getElementById("categoria").value;
-        torneos[indiceEdicion].participantes = parseInt(document.getElementById("numParticipantes").value);
-        torneos[indiceEdicion].valorInscripcion = parseFloat(document.getElementById("numValor").value);
-        torneos[indiceEdicion].email = document.getElementById("txtEmail").value;
-        torneos[indiceEdicion].recaudacion = torneos[indiceEdicion].participantes * torneos[indiceEdicion].valorInscripcion;
+
+        /*  torneos[indiceEdicion].nombre = document.getElementById("txtNombre").value;
+          torneos[indiceEdicion].categoria = document.getElementById("categoria").value;
+          torneos[indiceEdicion].participantes = parseInt(document.getElementById("numParticipantes").value);
+          torneos[indiceEdicion].valorInscripcion = parseFloat(document.getElementById("numValor").value);
+          torneos[indiceEdicion].email = document.getElementById("txtEmail").value;
+          torneos[indiceEdicion].recaudacion = torneos[indiceEdicion].participantes * torneos[indiceEdicion].valorInscripcion;
+          mostrarTorneos();
+          limpiarFormulario();
+  
+          
+  */
+        if (indiceEdicion === -1) {
+
+            const nuevoTorneo = {
+                nombre: nombre,
+                categoria: categoria,
+                participantes: participantes,
+                valorInscripcion: valorInscripcion,
+                email: email,
+                recaudacion: recaudacion
+            };
+            torneos.push(nuevoTorneo);
+        } else {
+
+            torneos[indiceEdicion].nombre = nombre;
+            torneos[indiceEdicion].categoria = categoria;
+            torneos[indiceEdicion].participantes = participantes;
+            torneos[indiceEdicion].valorInscripcion = valorInscripcion;
+            torneos[indiceEdicion].email = email;
+            torneos[indiceEdicion].recaudacion = recaudacion;
+
+
+            indiceEdicion = -1;
+            document.getElementById("btnRegistrar").value = "REGISTRAR TORNEO";
+        }
         mostrarTorneos();
         limpiarFormulario();
-
-        document.getElementById("mensajeExito").textContent = "Actualizacion de torneo EXITOSO!!!";
 
     }
 }
 
 
 
-
-
-
-
-
-
-
-
-
+//ya
 function eliminarTorneo(indice) {
     if (confirm("¿Está seguro de que desea eliminar este torneo?")) {
         torneos.splice(indice, 1);
@@ -183,6 +203,36 @@ function eliminarTorneo(indice) {
         document.getElementById("mensajeExito").textContent = "Torneo eliminado exitosamente.";
     }
 }
+//ya
+function generarTarjetas() {
+    let contenedor = document.getElementById("contenedorTarjetas");
+    if (!contenedor) {
+        const seccionTabla = document.querySelector("body > div:last-of-type");
+        contenedor = document.createElement("div");
+        contenedor.id = "contenedorTarjetas";
+        contenedor.style.display = "grid";
+        contenedor.style.gridTemplateColumns = "repeat(auto-fill, minmax(240px, 1fr))";
+        contenedor.style.gap = "1rem";
+        contenedor.style.marginBottom = "1.5rem";
+        seccionTabla.parentNode.insertBefore(contenedor, seccionTabla);
+    }
+
+    let contenidoCards = '';
+    for (let i = 0; i < torneos.length; i++) {
+        let t = torneos[i];
+        contenidoCards += `
+        <div class="tarjeta-torneo" style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem; transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.5)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
+            <h4 style="margin-top: 0; color: var(--accent);">${t.nombre}</h4>
+            <p style="margin: 0.25rem 0; font-size: 0.85rem;"><strong>Categoría:</strong> ${t.categoria}</p>
+            <p style="margin: 0.25rem 0; font-size: 0.85rem;"><strong>Participantes:</strong> ${t.participantes}</p>
+            <p style="margin: 0.25rem 0; font-size: 0.85rem;"><strong>Inscripción:</strong> $${t.valorInscripcion.toFixed(2)}</p>
+            <p style="margin: 0.25rem 0; font-size: 0.85rem;"><strong>Recaudación:</strong> $${t.recaudacion.toFixed(2)}</p>
+        </div>
+        `;
+    }
+    contenedor.innerHTML = contenidoCards;
+}
+
 
 
 
