@@ -90,10 +90,13 @@ function registrarTorneo() {
  * Actividad 5. Mostrar los torneos (15 puntos)
  * 24. Crear la función mostrarTorneos() sin parámetros.
  */
+
+
+let contenido = '';
 function mostrarTorneos() {
     // 25. Crear una variable vacía para concatenar el HTML
     const cuerpo = document.getElementById("cuerpoTabla")
-    let contenido = '';
+    
 
 
     // 26. Recorrer el arreglo torneos utilizando obligatoriamente un ciclo for
@@ -131,7 +134,31 @@ function limpiarFormulario() {
     document.getElementById("formularioTorneos").reset();
 }
 
+function guardarEdicion(indice) {
+    let nombre = document.getElementById("txtNombre").value;
+    let categoria = document.getElementById("categoria").value;
+    let participantes = parseInt(document.getElementById("numParticipantes").value);
+    let valorInscripcion = parseFloat(document.getElementById("numValor").value);
+    let email = document.getElementById("txtEmail").value;
 
+    const recaudacion = participantes * valorInscripcion;
+
+    torneos[indice].nombre = nombre;
+    torneos[indice].categoria = categoria;
+    torneos[indice].participantes = participantes;
+    torneos[indice].valorInscripcion = valorInscripcion;
+    torneos[indice].email = email;
+    torneos[indice].recaudacion = recaudacion;
+
+    mostrarTorneos();
+    limpiarFormulario();
+
+    indiceEdicion = -1;
+    document.getElementById("btnRegistrar").value = "REGISTRAR TORNEO";
+    document.getElementById("btnRegistrar").onclick = registrarTorneo;
+
+    document.getElementById("mensajeExito").textContent = "Torneo actualizado exitosamente.";
+}
 //revisar
 function editarTorneo(indice) {
     if (indice >= 0 && indice < torneos.length) {
@@ -145,49 +172,11 @@ function editarTorneo(indice) {
         indiceEdicion = indice;
         document.getElementById("btnRegistrar").value = "ACTUALIZAR TORNEO";
         document.getElementById("btnRegistrar").onclick = function () {
-            editarTorneo(indiceEdicion);
+            guardarEdicion(indiceEdicion);
         };
 
         document.getElementById("mensajeError").textContent = '';
         document.getElementById("mensajeExito").textContent = '';
-
-        /*  torneos[indiceEdicion].nombre = document.getElementById("txtNombre").value;
-          torneos[indiceEdicion].categoria = document.getElementById("categoria").value;
-          torneos[indiceEdicion].participantes = parseInt(document.getElementById("numParticipantes").value);
-          torneos[indiceEdicion].valorInscripcion = parseFloat(document.getElementById("numValor").value);
-          torneos[indiceEdicion].email = document.getElementById("txtEmail").value;
-          torneos[indiceEdicion].recaudacion = torneos[indiceEdicion].participantes * torneos[indiceEdicion].valorInscripcion;
-          mostrarTorneos();
-          limpiarFormulario();
-  
-          
-  */
-        if (indiceEdicion === -1) {
-
-            const nuevoTorneo = {
-                nombre: nombre,
-                categoria: categoria,
-                participantes: participantes,
-                valorInscripcion: valorInscripcion,
-                email: email,
-                recaudacion: recaudacion
-            };
-            torneos.push(nuevoTorneo);
-        } else {
-
-            torneos[indiceEdicion].nombre = nombre;
-            torneos[indiceEdicion].categoria = categoria;
-            torneos[indiceEdicion].participantes = participantes;
-            torneos[indiceEdicion].valorInscripcion = valorInscripcion;
-            torneos[indiceEdicion].email = email;
-            torneos[indiceEdicion].recaudacion = recaudacion;
-
-
-            indiceEdicion = -1;
-            document.getElementById("btnRegistrar").value = "REGISTRAR TORNEO";
-        }
-        mostrarTorneos();
-        limpiarFormulario();
 
     }
 }
@@ -235,6 +224,48 @@ function generarTarjetas() {
 }
 
 
+function buscarTorneos() {
+    let textoBusqueda = document.getElementById("txtBuscar").value.toLowerCase();
+    if (!textoBusqueda) {
+        mostrarTorneos();
+        return;
+    }
+
+    let torneosFiltrados = [];
+    for (let i = 0; i < torneos.length; i++) {
+        let t = torneos[i];
+        if (t.nombre.toLowerCase().includes(textoBusqueda) || t.categoria.toLowerCase().includes(textoBusqueda)) {
+            torneosFiltrados.push(t);
+        }
+    }
+
+    actualizarTabla(torneosFiltrados);
+
+
+}
+
+function actualizarTabla(Arreglo=[]){
+    const cuerpo = document.getElementById("cuerpoTabla")
+    contenido = '';
+
+    for (let i = 0; i < Arreglo.length; i++) {
+        let torneoActual = Arreglo[i];
+        contenido += `
+        <tr>
+            <td>${torneoActual.nombre}</td>
+            <td>${torneoActual.categoria}</td>
+            <td>${torneoActual.participantes}</td>
+            <td>${torneoActual.valorInscripcion.toFixed(2)}</td>
+            <td>${torneoActual.email}</td>
+            <td>${torneoActual.recaudacion.toFixed(2)}</td>
+            <td><input type='button' value='ELIMINAR' onclick='eliminarTorneo(${i});' /><br>
+            <input type='button' value='EDITAR' onclick='editarTorneo(${i});' />
+            </td>
+        </tr>
+        `;
+    }
+    cuerpo.innerHTML = contenido;
+}
 
 
 
