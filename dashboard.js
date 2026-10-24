@@ -68,7 +68,7 @@ function registrarTorneo() {
         participantes: participantes,
         valorInscripcion: valorInscripcion,
         email: email,
-        recaudacionEstimada: recaudacion;
+        recaudacionEstimada: recaudacion
     };
 
     torneos.push(nuevoTorneo);
@@ -89,8 +89,23 @@ function registrarTorneo() {
  */
 function mostrarTorneos() {
     // 25. Crear una variable vacía para concatenar el HTML
+    const cuerpo = document.getElementById("cuerpoTabla")
+    let contenido = '';
+    
 
     // 26. Recorrer el arreglo torneos utilizando obligatoriamente un ciclo for
+    for(let i = 0, i < torneos.length, i++){
+        let torneoActual = torneos[i];
+        contenido += '<tr>
+        <td>${torneoActual.nombre}</td>
+        <td>${torneoActual.categoria}</td>
+        <td>${torneoActual.participantes}</td>
+        <td>${torneoActual.valorInscripcion.toFixed(2)}</td>
+        <td>${torneoActual.email}</td>
+        <td>${torneoActual.recaudacion.toFixed(2)}</td>
+        </tr>';
+    }
+    cuerpo.innerHTML = contenido;
 
     // 27. En cada vuelta, obtener el objeto actual y construir una fila de la tabla (<tr>...</tr>)
 
