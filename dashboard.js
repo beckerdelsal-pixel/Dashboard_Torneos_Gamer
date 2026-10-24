@@ -19,7 +19,7 @@ function registrarTorneo() {
     let categoria= document.getElementById("categoria").value;
     let participantes = parseInt(document.getElementById("numParticipantes").value);
     let valorInscripcion = parseFloat(document.getElementById("numValor").value);
-    let emailOrganizador = document.getElementById("txtEmail")
+    let email = document.getElementById("txtEmail").value;
 
     const lblError = document.getElementById("mensajeError");
     const lblExito = document.getElementById("mensajeExito");
@@ -51,15 +51,15 @@ function registrarTorneo() {
     }
 
     // 18. Validar que el email no esté vacío. No se requiere validación avanzada de formato.
-    if(email == ''){
-        lblError.textContent = "Error, debe ingresar un correo obligatorio"
+    if(email === ''){
+        lblError.textContent = "Error, debe ingresar un correo obligatorio";
         return;
     }
 
     // Si alguna validación falla, mostrar mensajes de error y detener la ejecución
 
     // 19. Calcular la recaudación estimada con: participantes × valor de inscripción
-    let recaudacion = participantes * valorInscripcion;
+    let recaudacion = (parseFloat(participantes) * valorInscripcion);
 
     // 20. Crear el objeto nuevoTorneo con los datos obtenidos
     const nuevoTorneo = {
@@ -68,7 +68,7 @@ function registrarTorneo() {
         participantes: participantes,
         valorInscripcion: valorInscripcion,
         email: email,
-        recaudacionEstimada: recaudacion
+        recaudacion: recaudacion
     };
 
     torneos.push(nuevoTorneo);
@@ -94,16 +94,18 @@ function mostrarTorneos() {
     
 
     // 26. Recorrer el arreglo torneos utilizando obligatoriamente un ciclo for
-    for(let i = 0, i < torneos.length, i++){
+    for(let i = 0; i < torneos.length; i++){
         let torneoActual = torneos[i];
-        contenido += '<tr>
-        <td>${torneoActual.nombre}</td>
-        <td>${torneoActual.categoria}</td>
-        <td>${torneoActual.participantes}</td>
-        <td>${torneoActual.valorInscripcion.toFixed(2)}</td>
-        <td>${torneoActual.email}</td>
-        <td>${torneoActual.recaudacion.toFixed(2)}</td>
-        </tr>';
+        contenido += `
+        <tr>
+            <td>${torneoActual.nombre}</td>
+            <td>${torneoActual.categoria}</td>
+            <td>${torneoActual.participantes}</td>
+            <td>${torneoActual.valorInscripcion.toFixed(2)}</td>
+            <td>${torneoActual.email}</td>
+            <td>${torneoActual.recaudacion.toFixed(2)}</td>
+        </tr>
+        `;
     }
     cuerpo.innerHTML = contenido;
 
@@ -120,4 +122,5 @@ function mostrarTorneos() {
  */
 function limpiarFormulario() {
     // 31. Vaciar los campos del formulario, restablecer la categoría y limpiar los mensajes de error
+    document.getElementById("formularioTorneos").reset();
 }

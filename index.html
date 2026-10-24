@@ -5,18 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Torneos Gamer</title>
-    <script src="dashboard.js"></script>
+
     <link rel="stylesheet" href="estilos.css" />
+
 </head>
 
 <body>
 
     <h1>Dashboard Torneos Gamer</h1>
-    <form>
+    <form id="formularioTorneos">
         <div>
             <label for="nombre">Nombre del Torneo: </label>
             <input type="text" id="txtNombre" />
-            
+
         </div>
         <div>
             <label for="categoria">Categoria del Torneo: </label>
@@ -27,31 +28,31 @@
                 <option value="Deportes">Deportes</option>
                 <option value="Aventuras">Aventuras</option>
             </select>
-            
+
         </div>
         <div>
             <label for="participantes">Participantes del Torneo: </label>
             <input type="number" id="numParticipantes" min="1" max="100" />
-            
+
         </div>
         <div>
             <label for="valor">Valor de Inscripcion: </label>
             <input type="number" id="numValor" />
-            
+
         </div>
         <div>
             <label for="email">Email del Organizador: </label>
             <input type="email" id="txtEmail" />
-            
+
         </div>
 
-        <input type="button" value="REGISTRAR TORNEO" />
+        <input type="button" value="REGISTRAR TORNEO" onclick="registrarTorneo();" />
     </form>
     <p id="mensajeError"></p>
     <p id="mensajeExito"></p>
     <div>
         <h3>Torneos Registrados</h3>
-        <table>
+        <table class="tablas">
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -59,7 +60,7 @@
                     <th>Particiantes</th>
                     <th>Valor de Inscripcion</th>
                     <th>Email</th>
-                    <th>Recadacion Estimada</th>
+                    <th>Recaudacion Estimada</th>
                 </tr>
             </thead>
             <tbody id="cuerpoTabla">
@@ -68,7 +69,7 @@
         </table>
     </div>
 
-
+    <script src="dashboard.js"></script> 
 </body>
 
 </html>
