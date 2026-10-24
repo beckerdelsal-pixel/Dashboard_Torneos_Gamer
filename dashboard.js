@@ -9,6 +9,7 @@
 // nombre, categoria, participantes, valorInscripcion, email y recaudacion.
 let torneos = [];
 let indiceEdicion = -1;
+let torneosFiltrados = [];
 
 /**
  * Actividad 4. Registrar y validar un torneo (30 puntos)
@@ -234,6 +235,40 @@ function generarTarjetas() {
 }
 
 
+
+
+
+
+function actualizarEstadisticas() {
+    let seccionEstadisticas = document.getElementById("seccionEstadisticas");
+    if (!seccionEstadisticas) {
+        const seccionTabla = document.querySelector("body > div:last-of-type");
+        seccionEstadisticas = document.createElement("div");
+        seccionEstadisticas.id = "seccionEstadisticas";
+        seccionEstadisticas.style.marginBottom = "1.5rem";
+        seccionEstadisticas.style.padding = "1.25rem";
+        seccionEstadisticas.style.backgroundColor = "var(--bg-card)";
+        seccionEstadisticas.style.borderRadius = "8px";
+        seccionEstadisticas.style.border = "1px solid var(--border-color)";
+        seccionTabla.parentNode.insertBefore(seccionEstadisticas, seccionTabla);
+    }
+
+    let totalTorneos = torneos.length;
+    let totalParticipantes = 0;
+    let recaudacionTotal = 0;
+
+    for (let i = 0; i < torneos.length; i++) {
+        totalParticipantes += torneos[i].participantes;
+        recaudacionTotal += torneos[i].recaudacion;
+    }
+
+    seccionEstadisticas.innerHTML = `
+        <h3 style="margin-top:0; color: var(--accent); font-size: 1.1rem;">📊 Estadísticas Generales</h3>
+        <p style="margin: 0.25rem 0;"><strong>Total de Torneos:</strong> ${totalTorneos}</p>
+        <p style="margin: 0.25rem 0;"><strong>Total de Participantes:</strong> ${totalParticipantes}</p>
+        <p style="margin: 0.25rem 0;"><strong>Recaudación Total Estimada:</strong> $${recaudacionTotal.toFixed(2)}</p>
+    `;
+}
 
 
 
